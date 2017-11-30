@@ -1,7 +1,8 @@
 # -*- encoding: utf-8 -*-
-# pilas engine: un motor para hacer videojuegos
+# pilas engine accesible: un motor para hacer videojuegos
 #
 # Copyright 2010-2014 - Hugo Ruscitti
+# Copyright 2017 - modificado por Miguel Barraza
 # License: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 #
 # Website - http://www.pilas-engine.com.ar
@@ -13,33 +14,34 @@ import random
 import signal
 import imp
 import time
-import colores
+from . import colores
 
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 
-import configuracion
-import etiquetas
-import escenas
-import imagenes
-import actores
-import utils
-import fondos
-import depurador
-import musica
-import interfaz
-import sonidos
-import habilidades
-import comportamientos
-import eventos
-import controles
-import pad
-import watcher
-import plugins
-import simbolos
-import datos
-import fisica
+from . import configuracion
+from . import etiquetas
+from . import escenas
+from . import imagenes
+from . import actores
+from . import utils
+from . import fondos
+from . import depurador
+from . import musica
+from . import interfaz
+from . import sonidos
+from . import habilidades
+from . import comportamientos
+from . import eventos
+from . import controles
+from . import pad
+from . import watcher
+from . import plugins
+from . import simbolos
+from . import datos
+from . import fisica
 
+from .tts import leer
 
 import widget
 
@@ -77,6 +79,7 @@ class Pilas(object):
         self.texto_avisar_anterior = None
         self.modo_test = modo_test
         self._audio_inicializado = False
+        self.leer = leer
 
         # Archivo que se observa para hacer livecoding. Esta
         # variable toma valor cuando se llama a la función
@@ -279,7 +282,7 @@ class Pilas(object):
         contenido = f.read()
         f.close()
 
-        print "%s - Reiniciando" % (time.strftime("%H:%m:%S"))
+        print("%s - Reiniciando" % (time.strftime("%H:%m:%S")))
 
         geometry = self.widget.geometry()
 
@@ -288,7 +291,7 @@ class Pilas(object):
 
         try:
             exec(contenido, scope, scope)
-        except Exception, e:
+        except Exception as e:
             self.procesar_error(e)
 
         self.widget.setGeometry(geometry)
@@ -434,7 +437,7 @@ class Pilas(object):
         try:
             self.escenas.realizar_dibujado(painter)
             self.depurador.realizar_dibujado(painter)
-        except Exception, e:
+        except Exception as e:
             if self._capturar_errores:
                 self.log("Capturando un error: %s", e)
                 self.depurador.desactivar_todos_los_modos()
@@ -544,7 +547,7 @@ class Pilas(object):
             except TypeError:
                 codigo = "<< imposible inspeccionar código para mostrar >>"
 
-        print codigo
+        print(codigo)
 
     def definir_pantalla_completa(self, estado):
         if estado:
@@ -661,7 +664,7 @@ def abrir_script(archivo):
     def ejecutar_archivo(nombre):
         try:
             imp.load_source("__main__", nombre)
-        except Exception, e:
+        except Exception as e:
             terminar_con_error("Error al ejecutar " + nombre + ":\n" + str(e))
 
     ruta_absoluta_al_archivo = os.path.abspath(archivo)

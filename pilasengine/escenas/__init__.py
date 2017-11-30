@@ -114,8 +114,8 @@ class Escenas(object):
         def metodo_crear_escena(self, *k, **kw):
             try:
                 nueva_escena = clase_de_la_escena(self.pilas)
-            except TypeError, error:
-                print traceback.format_exc()
+            except TypeError as error:
+                print(traceback.format_exc())
                 mensaje_extendido = "\n\t(en la clase %s solo se deberia esperar el argumento pilas" %(str(clase_de_la_escena.__name__))
                 raise TypeError(str(error) + mensaje_extendido)
 
@@ -123,8 +123,8 @@ class Escenas(object):
 
             try:
                 nueva_escena.iniciar(*k, **kw)
-            except TypeError, error:
-                print traceback.format_exc()
+            except TypeError as error:
+                print(traceback.format_exc())
                 nombre = clase_de_la_escena.__name__
                 argumentos_esperados = str(inspect.getargspec(clase_de_la_escena.iniciar))
                 argumentos = str(k) + " " + str(kw)

@@ -73,6 +73,7 @@ Mira el manual para mas detalles:
 
         # agrego el directorio de plugin al sys.path
         ruta_de_plugins = self.__obtener_ruta_de_plugins()
+        #print(ruta_de_plugins)
         if not ruta_de_plugins in sys.path:
             sys.path.append(ruta_de_plugins)
 

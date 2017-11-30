@@ -6,7 +6,7 @@
 #
 # Website - http://www.pilas-engine.com.ar
 from pilasengine.escenas.escena import Escena
-
+import pyperclip as clipboard
 
 class Error(Escena):
     """Representa la escena de errores de pilas.
@@ -22,6 +22,24 @@ class Error(Escena):
         self.fondo = self.pilas.fondos.Plano()
         self.actor_error = self.pilas.actores.MensajeError(self.titulo,
                                                            self.descripcion)
+        self.pilas.leer("error: {}. {}".format(titulo, descripcion))
+        clipboard.copy("{}\n\n{}".format(titulo, descripcion))
+        self.enfocarTexto = True
+        self.pilas.eventos.pulsa_tecla.conectar(self.interpretaTeclado)
+
+    def interpretaTeclado(self, evento):
+        if evento.codigo == self.pilas.simbolos.ABAJO:
+            self.leerTexto()
+        elif evento.codigo == self.pilas.simbolos.ARRIBA:
+            self.leerTexto()
+
+    def leerTexto(self):
+        if self.enfocarTexto:
+            self.enfocarTexto = False
+            self.pilas.leer(self.actor_error.titulo_error)
+        else:
+            self.enfocarTexto = True
+            self.pilas.leer(self.actor_error.descripcion_error)
 
     def actualizar(self):
         pass
