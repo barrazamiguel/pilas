@@ -9,10 +9,17 @@
 from appdirs import AppDirs
 
 
-class Datos(object):
+class Datos(dict):
 
     def __init__(self, pilas):
         self.pilas = pilas
+        dict.__init__(self)
+
+    def __getattr__(self, clave):
+        return self[clave]
+
+    def set(self, clave, dato):
+        self[clave] = dato
 
     def generar(self, nombre):
         return DatosPersistentes(self.pilas, nombre)
