@@ -44,7 +44,6 @@ log_distmac.txt
 macbins
 nosetests.xml
 parts/
-pilas.egg-info
 pilas/data/pilas.pdf
 pip-delete-this-directory.txt
 pip-log.txt
