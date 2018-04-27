@@ -1,0 +1,4 @@
+setuptools
+box2d
+pyperclip
+accessible_output

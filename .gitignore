@@ -1,7 +1,6 @@
 .project
 .pydevproject
 *.egg
-*.egg-info/
 *.log
 *.mo
 *.pot
